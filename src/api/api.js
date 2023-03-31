@@ -5,7 +5,6 @@ const useApi = () => {
 const addBodyFormData = async(data) =>{
     const formData = new FormData();
     formData.append("fingerprint", await uuid());
-    console.log("fingerPrint", await uuid());
     if(data !== undefined){
         Object.keys(data).forEach(key => {
             formData.append(key, data[key]);
@@ -18,22 +17,35 @@ const baseUrl = axios.create({
 });
 
 const sendDeviceUuid = async (data) => {
-    const formData = await addBodyFormData(data);
-    const response = await baseUrl.post("/device", formData);
-    return response.data;
+    try{
+        const formData = await addBodyFormData(data);
+        const response = await baseUrl.post("/device", formData);
+        return response.data;
+    } catch (e) {
+        console.log(e);
+    }
 };
 
 const getAd = async (data) => {
-    const formData = await addBodyFormData(data);
-    const response = await baseUrl.post("/ad", formData);
-    return response.data;
-}
+    try {
+        const formData = await addBodyFormData(data);
+        const response = await baseUrl.post("/ad", formData);
+        return response.data;
+    } catch (e) {
+        console.log(e);
+    }
+};
 
 const getNewsTicker = async (data) => {
-    const formData = await addBodyFormData(data);
-    const response = await baseUrl.post("/ticker", formData);
-    return response.data;
-}
+    try {
+        const formData = await addBodyFormData(data);
+        const response = await baseUrl.post("/ticker", formData);
+        return response.data;
+    } catch (e) {
+        console.log(e);
+    }
+};
+
 
 // export const getNewsTrack = async (uuid, track, ticker) => {
 //
