@@ -1,0 +1,30 @@
+.identify-device {
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    ion-img {
+        object-fit: cover;
+    }
+}
+
+.blinking-code{
+    width:100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    div {
+        padding:2rem;
+        background: rgba(0,0,0,0.4);
+        h1{
+            text-align: center;
+            padding:10px 10px 0 10px;
+            font-width: bold;
+        }
+    }
+}
