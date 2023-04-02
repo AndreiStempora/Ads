@@ -1,18 +1,20 @@
-import {useEffect, useState, useRef} from "react";
+import {useState} from "react";
 import {View} from "./View";
-import {useAdSwapper} from "../../../hooks/adSwapperHook";
-import YoutubeComponent from "../../../components/displays/youtube/YoutubeComponent";
 
 export const ViewSwapper = ({data, newFetch}) => {
-    const [view, setView] = useState([]);
-    const useAddSwapper = useAdSwapper();
+    const [viewOne, setViewOne] = useState(true);
+    const [viewTwo, setViewTwo] = useState(false);
+
+    
     
     return(
         <>
-            <View title={"1"}></View>
-            <View title={"2"}></View>
-            <YoutubeComponent/>
-            {/*<VideoComponent/>*/}
-    </>
+            {viewOne?
+                <View setView={setViewTwo} del={setViewOne}></View>:null
+            }
+            {viewTwo?
+                <View setView={setViewOne} del={setViewTwo}></View>:null
+            }
+        </>
     )
 }

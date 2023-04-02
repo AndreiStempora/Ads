@@ -22,31 +22,40 @@ const IdentifyDeviceContent = () => {
         if(data?.ads){
             history.push("/ads");
         }
+        return data;
     };
     
     useEffect(() => {
         (async () => {
-            await resendRequest()
-            
-            const getRepeatTimer = () => {
-                let timer = 0;
-                data?.background.map((bg,i)=>{
-                    timer += bg.stay * 1000;
-                })
-                return timer;
+            const newData = await resendRequest();
+            try{
+                if(newData?.background?.length !== 0){
+                    const getRepeatTimer = () => {
+                        let timer = 0;
+                        newData?.background?.map((bg,i)=>{
+                            timer += bg.stay * 1000;
+                        })
+                        return timer;
+                    }
+                    //repeat this for ever and ever
+                    setInterval(()=>{
+                        // console.log("repeat",newData)
+                        newData?.background?.map((bg,i)=>{
+                            setTimeout(async()=>{
+                                setBg(createBackground(newData?.background[i]?.link));
+                                if(i === newData?.background?.length - 1){
+                                    await resendRequest();
+                                }
+                            }, i * bg.stay * 1000);
+                        })
+                        }, getRepeatTimer());
+                }
+            } catch (e) {
+                console.log(e);
             }
-            //repeat this for ever and ever
-            //setInterval(()=>{
-                data?.background.map((bg,i)=>{
-                    setTimeout(async()=>{
-                        setBg(createBackground(data?.background[i].link));
-                        if(i === data?.background.length - 1){
-                            await resendRequest();
-                        }
-                    }, i * bg.stay * 1000);
-                })//}, getRepeatTimer());
         })();
     }  , []);
+
     
     return (
         <IonPage>
