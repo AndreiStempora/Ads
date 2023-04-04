@@ -1,75 +1,21 @@
 import ReactPlayer from 'react-player';
-import {useEffect, useRef, useState} from "react";
+import {useHandleVideo} from "../../../hooks/handleVideoHook";
 
 export const YoutubeComponent = ({data,setDuration,setRetry,creationTimeRef,TIMER_GAP, del}) => {
-    const playerRef = useRef(null);
-    const [playing , setPlaying] = useState(true);
-    const [volume,setVolume] = useState(0);
-    
-
-    useEffect(() => {
-        //if the link is not playable, request new ad
-        if(!ReactPlayer.canPlay(data?.ad?.link)){
-            setRetry((retry)=>retry + 1);  
-        } 
-    }, [])
-
-    const setTimerTillStart = () => {
-        const currentTime = new Date().getTime();
-        const timeDiff = currentTime - creationTimeRef.current;
-        if(timeDiff > TIMER_GAP){
-            // setVolume(1);
-            return 0;
-        } 
-        return TIMER_GAP - timeDiff;
-    }
-        
-    const onReady = () => {
-        const timer = setTimerTillStart();
-        if(!timer === 0){
-            setTimeout(() => {
-                // setPlaying(true);
-                setVolume(0);
-                playerRef.current.seekTo(0);
-                // console.log(timeStampRef.current - new Date().getTime())
-            }, timer);
-        } else {
-            setVolume(0);
-        }
-    }
-
-    const onStart = () => {
-        // const timer = setTimerTillStart();
-        // if(!timer === 0){
-        //     setTimeout(() => {
-        //         // setPlaying(true);
-        //         playerRef.current.seekTo(0);
-        //         setVolume(1);
-        //         // console.log(timeStampRef.current - new Date().getTime())
-        //     }, timer);
-        // }
-    }
-
-    const onError = () => {
-        setRetry((retry)=>retry + 1);
-    }
-
-    const onEnded = () => {
-        // console.log('ended');
-        let x = document.querySelectorAll("ion-content > div");
-        // x[0].classList.add("fade-out");
-        console.log(x);
-        setTimeout(() => {
-            del(false);
-        }, 1000);
-    }    
-    
+    const {playerRef,
+        playing,
+        volume,
+        onReady,
+        onStart,
+        onError,
+        onEnded,
+        onBufferEnd} = useHandleVideo({data,setRetry,TIMER_GAP,creationTimeRef,del})
     return (
         <>
             <ReactPlayer
                 ref = {playerRef}
-                // url = {data?.ad?.link}
-                url={"https://www.youtube.com/watch?v=UT5F9AXjwhg"}
+                url = {data?.ad?.link}
+                // url={"https://v2.stemads.stempora.me/public/stemads/emanuel/28.mp4?1637754027"}
                 width = "100%"
                 height = "100%"
                 controls = {false}
@@ -84,10 +30,9 @@ export const YoutubeComponent = ({data,setDuration,setRetry,creationTimeRef,TIME
                 onStart={onStart}
                 // onPlay={()=>{console.log("play!!!")}}
                 // onProgress={()=>{console.log("progress!!!")}}
-                onDuration={(duration)=>{setDuration(duration * 1000)}}
-                // onPause={()=>{console.log("pause!!!")}}
+                onDuration={(duration)=>{setDuration(duration * 1000); } }
                 // onBuffer={()=>{console.log("buffer!!!")}}
-                // onBufferEnd={()=>{console.log("bufferEnd!!!")}}
+                onBufferEnd={onBufferEnd}
                 onError={onError}
                 onEnded={onEnded}
             />

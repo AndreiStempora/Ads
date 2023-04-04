@@ -1,21 +1,111 @@
-.ticker-container{
-//     width:100%;
-//     height:80px;
-//     border: 1px solid green;
-//     position:absolute;
-//     top:80%;
-//     .ticker-content{
-//         border:1px solid red;
-//         width:100%;
-//         height: 100%;
-//     }
-     .x{
-        right:0;
-        text-align: end;
-        transform:translateX(0);
-        transition:transform 10s linear;
-        &.active{
-            transform:translateX(-100%);
+.ticker{
+    position: absolute;
+    top: 80%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: nowrap;
+    width: 100vw;
+    height: 40px;
+    .clock {
+        z-index: 4;
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        background: rgba(0, 0, 0, 1);
+        padding: 0 10px;
+
+        > span {
+            line-height: 40px;
         }
-     }
+    }
+    .ticker-container {
+        background: grey;
+        position: absolute;
+        width:100%;
+        height: 100%;
+
+        .wrapper {
+            position: absolute;
+            width: 100%;
+            left: 0;
+            top: 0;
+            height: 100%;
+            transform: translateX(0);
+            transition: linear;
+            overflow: hidden;
+            white-space: nowrap;
+            margin: 0;
+
+            p {
+                position: absolute;
+                right: 0;
+                margin: 0;
+                line-height: 40px;
+                transform: translateX(100%);
+                transition: linear;
+            }
+        }
+    }
+}
+
+.ticker2{
+    position: absolute;
+    top: calc(80% - 40px);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: nowrap;
+    width: 100vw;
+    height: 40px;
+    .clock {
+        z-index: 4;
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        background: rgba(0, 0, 0, 1);
+        padding: 0 10px;
+
+        > span {
+            line-height: 40px;
+        }
+    }
+    .ticker-container {
+        background: grey;
+        position: absolute;
+        width:100%;
+        height: 100%;
+
+        .wrapper {
+            position: absolute;
+            width: 100%;
+            left: 0;
+            top: 0;
+            height: 100%;
+            transform: translateX(0);
+            transition: linear;
+            overflow: hidden;
+            white-space: nowrap;
+            margin: 0;
+
+            p {
+                position: absolute;
+                right: 0;
+                margin: 0;
+                line-height: 40px;
+                transform: translateX(100%);
+                transition: linear;
+            }
+        }
+    }
+}
+
+
+.overlay23{
+    position: absolute;
+    z-index: 30;
+    height: 100%;
+    width: 100%;
 }

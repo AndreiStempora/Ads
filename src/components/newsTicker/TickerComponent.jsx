@@ -1,45 +1,32 @@
 import "./ticker.scss";
-import {useEffect, useRef} from "react";
+import {useEffect, useRef, useState} from "react";
 import useApi from "../../api/api"
-import Marquee from "react-fast-marquee";
+import {useTime, useTickerCssAnimation, useTickerJsAnimation} from "../../hooks/tickerHook";
 
 export const TickerComponent = () => {
-    const {getNewsTicker} = useApi();
-    const newsRef = useRef();
-    let newArray = ['red-------------------------','red++++++++++++++++++++++++','red????????????????????????'];
-    useEffect(() => {
-        (async () => {
-            const news = await getNewsTicker();
-            newsRef.current = news.ads;
-            console.log(newsRef.current);
-            let y=[];
-             news.ads.map(a => y.push(a.text))
-                let x = document.querySelector('.ticker-container').setAttribute('array',y)
-                console.log(x,y)
-                
-            
-            
-            // newsRef.current.push()
-            // newsRef.current.push()
-            // newsRef.current.push('red????????????????????????')
-        })()
-    }, [])
-
+    const {hours, minutes} = useTime();
+    const { container } = useTickerJsAnimation();
+    // const { container: container2 } = useTickerCssAnimation();
+    
+    
     return (
-        <div className="ticker-container">
-            <Marquee 
-                play={true}
-                direction="left"
-                speed={30}
-                delay={2}
-                loop={0}
-                gradient={false}
-            >
-                {newArray?.map((news,i) => {
-                    return (<h1 key={i}>{news}</h1>)
-                })}
-            </Marquee>
-            <div className={"x"}>aaaaaaaaaaaaaaaaaaaaaaaaa</div>
+        <div className={"overlay23"}>
+            <div className="ticker">
+                <div className="clock">
+                    <span className="clock__hours">{hours}</span>:
+                    <span className="clock__minutes">{minutes}</span>
+                </div>
+                <div ref={container} className="ticker-container">
+                </div>
+            </div>
+            {/*<div className="ticker2">*/}
+            {/*    <div className="clock">*/}
+            {/*        <span className="clock__hours">{hours}</span>:*/}
+            {/*        <span className="clock__minutes">{minutes}</span>*/}
+            {/*    </div>*/}
+            {/*    <div ref={container2} className="ticker-container">*/}
+            {/*    </div>*/}
+            {/*</div>*/}
         </div>
     )
 }

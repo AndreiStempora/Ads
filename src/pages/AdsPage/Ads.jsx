@@ -20,12 +20,12 @@ const Ads = () => {
     return (
         <IonPage>
             <IonContent fullscreen>
+                <TickerComponent/>
                 <ViewSwapper
                     oldFetch={fetchNewAdToggle}
                     newFetch={setFetchNewAdToggle}
                     data={data}
                 ></ViewSwapper>
-                <TickerComponent/>
             </IonContent>
         </IonPage>
     );

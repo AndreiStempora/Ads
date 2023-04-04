@@ -4,8 +4,6 @@ import {View} from "./View";
 export const ViewSwapper = ({data, newFetch}) => {
     const [viewOne, setViewOne] = useState(true);
     const [viewTwo, setViewTwo] = useState(false);
-
-    
     
     return(
         <>

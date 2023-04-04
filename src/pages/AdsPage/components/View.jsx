@@ -3,7 +3,6 @@ import useApi from "../../../api/api"
 import {ImageComponent} from "../../../components/displays/image/ImageComponent";
 import {VideoComponent} from "../../../components/displays/video/VideoComponent";
 import {YoutubeComponent} from "../../../components/displays/youtube/YoutubeComponent";
-// import useApi from "../../../api/api";
 
 export const View = ({setView,del}) =>{
     const [retry, setRetry] = useState(0);
@@ -18,7 +17,7 @@ export const View = ({setView,del}) =>{
         creationTimeRef.current = new Date().getTime();
         (async () => {
             const newData = await getAd();
-            console.log('not initial',newData)
+            // console.log('not initial',newData)
             setData(newData);
         })();
 
@@ -26,9 +25,13 @@ export const View = ({setView,del}) =>{
             setData(null)
         }
     }, [retry])
+    
+    useEffect(() => {
+    
+    }, [data])
 
     const whenToPrepareNextAd = () => {
-        console.log(thisAdDuration,'wtf')
+        // console.log(thisAdDuration,'wtf')
         if(thisAdDuration !== 0){
             setTimeout(() => {
                 setView(true);
@@ -39,6 +42,7 @@ export const View = ({setView,del}) =>{
     useEffect(() => {whenToPrepareNextAd()}, [thisAdDuration])
 
     const selectDisplayComponent = () => {
+        console.log(data,'data type');
         if(data?.ad?.type === "image"){
             return(
                 <ImageComponent 
@@ -79,15 +83,7 @@ export const View = ({setView,del}) =>{
 
     return(
         <>
-            {/* {data? selectDisplayComponent():null}   */}
-            {/* <YoutubeComponent 
-                    data={data} 
-                    setDuration={setThisAdDuration}
-                    setRetry={setRetry}
-                    creationTimeRef={creationTimeRef}
-                    TIMER_GAP={TIMER_GAP}
-                    del={del}
-                /> */}
+             {data? selectDisplayComponent():null}
         </>
     )
 }

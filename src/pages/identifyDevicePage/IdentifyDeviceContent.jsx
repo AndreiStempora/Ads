@@ -8,8 +8,9 @@ const IdentifyDeviceContent = () => {
     const history = useHistory();
     const { sendDeviceUuid } = useApi();
     const [data, setData] = useState();
-    const [bg, setBg] = useState(<IonImg src={"/assets/images/genericBG.jpg"} ></IonImg>);
-    const [imageC, setImageC] = useState();
+    const [bg, setBg] = useState();
+    let interval;
+    let clockInterval;
     
     const createBackground = (string) => {
         return(<IonImg src={`${string}`} ></IonImg>)
@@ -37,8 +38,9 @@ const IdentifyDeviceContent = () => {
                         })
                         return timer;
                     }
+                    setBg(createBackground(newData?.background[0]?.link));
                     //repeat this for ever and ever
-                    setInterval(()=>{
+                    interval = setInterval(()=>{
                         // console.log("repeat",newData)
                         newData?.background?.map((bg,i)=>{
                             setTimeout(async()=>{
@@ -54,6 +56,10 @@ const IdentifyDeviceContent = () => {
                 console.log(e);
             }
         })();
+        
+        return () => {
+            clearInterval(interval);
+        }
     }  , []);
 
     
